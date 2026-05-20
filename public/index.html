@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LYMPHOGUARD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .landing {
+      grid-template-columns: minmax(0, 0.9fr) minmax(360px, 0.7fr);
+      gap: 56px;
+      padding: 64px 86px;
+    }
+    .landing-content {
+      text-align: left;
+    }
+    .landing .button-row {
+      justify-content: flex-start;
+    }
+    .ring-stage {
+      position: relative;
+      z-index: 1;
+      min-height: 520px;
+      display: grid;
+      place-items: center;
+      perspective: 900px;
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+    }
+    .ring-stage:active {
+      cursor: grabbing;
+    }
+    .smart-ring {
+      position: relative;
+      width: 360px;
+      height: 360px;
+      transform-style: preserve-3d;
+      transform: rotateX(var(--rx, 58deg)) rotateY(var(--ry, -28deg)) rotateZ(var(--rz, 8deg));
+      transition: transform 120ms ease-out;
+    }
+    .ring-outer,
+    .ring-inner,
+    .ring-shadow,
+    .ring-sensor {
+      position: absolute;
+      border-radius: 50%;
+    }
+    .ring-outer {
+      inset: 34px;
+      background:
+        radial-gradient(circle at 35% 28%, #ffffff 0 8%, #ece8df 21%, #c9c4ba 38%, #fbfaf6 55%, #b7b0a4 72%, #f8f7f4 100%);
+      box-shadow:
+        inset 0 18px 28px rgba(255,255,255,0.78),
+        inset 0 -24px 34px rgba(64,55,42,0.22),
+        0 34px 70px rgba(13,13,13,0.16);
+      transform: translateZ(24px);
+    }
+    .ring-inner {
+      inset: 102px;
+      background: #f8f7f4;
+      box-shadow:
+        inset 0 16px 26px rgba(13,13,13,0.16),
+        0 0 0 18px rgba(255,255,255,0.28);
+      transform: translateZ(30px);
+    }
+    .ring-shadow {
+      inset: 82px;
+      border: 32px solid rgba(11,31,58,0.08);
+      filter: blur(2px);
+      transform: translateZ(-18px);
+    }
+    .ring-sensor {
+      width: 34px;
+      height: 34px;
+      left: 164px;
+      top: 68px;
+      background: #0b1f3a;
+      box-shadow: 0 0 0 8px rgba(255,255,255,0.72);
+      transform: translateZ(44px);
+    }
+    .ring-caption {
+      position: absolute;
+      bottom: 42px;
+      left: 50%;
+      width: 300px;
+      transform: translateX(-50%);
+      color: #6b7280;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .landing-footer {
+      color: #6b7280;
+    }
+    @media (max-width: 980px) {
+      .landing {
+        grid-template-columns: 1fr;
+        padding: 42px 22px 84px;
+      }
+      .landing-content {
+        text-align: center;
+      }
+      .landing .button-row {
+        justify-content: center;
+      }
+      .ring-stage {
+        min-height: 380px;
+      }
+      .smart-ring {
+        width: 280px;
+        height: 280px;
+      }
+      .ring-inner {
+        inset: 82px;
+      }
+      .ring-sensor {
+        left: 123px;
+        top: 52px;
+      }
+    }
+  </style>
+</head>
+<body data-page="landing">
+  <main class="landing">
+    <section class="landing-content" aria-label="LYMPHOGUARD access">
+      <h1>LYMPHOGUARD</h1>
+      <p class="landing-subtitle">Continuous immune fitness monitoring for chemoradiation patients.</p>
+      <div class="button-row">
+        <button class="button primary" type="button" data-nav="dashboard.html">Clinician View</button>
+        <button class="button secondary" type="button" data-nav="patient-portal.html">Patient View</button>
+      </div>
+    </section>
+    <section class="ring-stage" aria-label="Interactive wearable ring preview">
+      <div class="smart-ring" id="smartRing">
+        <div class="ring-shadow"></div>
+        <div class="ring-outer"></div>
+        <div class="ring-inner"></div>
+        <div class="ring-sensor"></div>
+      </div>
+      <p class="ring-caption">Drag the ring to inspect the wearable signal layer.</p>
+    </section>
+    <footer class="landing-footer">Clinical-grade immune monitoring prototype.</footer>
+  </main>
+  <script src="app.js"></script>
+  <script>
+    const stage = document.querySelector(".ring-stage");
+    const ring = document.getElementById("smartRing");
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let rx = 58;
+    let ry = -28;
+
+    function updateRing() {
+      ring.style.setProperty("--rx", `${rx}deg`);
+      ring.style.setProperty("--ry", `${ry}deg`);
+    }
+
+    stage.addEventListener("pointerdown", (event) => {
+      isDragging = true;
+      startX = event.clientX;
+      startY = event.clientY;
+      stage.setPointerCapture(event.pointerId);
+    });
+
+    stage.addEventListener("pointermove", (event) => {
+      if (!isDragging) return;
+      const dx = event.clientX - startX;
+      const dy = event.clientY - startY;
+      ry += dx * 0.35;
+      rx -= dy * 0.25;
+      rx = Math.max(20, Math.min(78, rx));
+      startX = event.clientX;
+      startY = event.clientY;
+      updateRing();
+    });
+
+    stage.addEventListener("pointerup", () => {
+      isDragging = false;
+    });
+
+    stage.addEventListener("pointercancel", () => {
+      isDragging = false;
+    });
+  </script>
+</body>
+</html>

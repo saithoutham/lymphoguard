@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LYMPHOGUARD | Methods</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { background: #f8f7f4; }
+    .methods-product {
+      min-height: calc(100% - 68px);
+      padding: 52px 24px 88px;
+    }
+    .methods-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .methods-hero {
+      max-width: 760px;
+      margin-bottom: 38px;
+    }
+    .methods-hero h1 {
+      margin: 0 0 18px;
+      font-family: "DM Serif Display", serif;
+      font-size: 64px;
+      line-height: 1;
+      font-weight: 400;
+      color: #0d0d0d;
+    }
+    .methods-hero p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 20px;
+      line-height: 1.7;
+    }
+    .pipeline {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 54px minmax(0, 1fr) 54px minmax(0, 1fr);
+      align-items: stretch;
+      margin: 34px 0 54px;
+    }
+    .pipe-card {
+      min-width: 0;
+      min-height: 230px;
+      padding: 28px;
+      border-radius: 16px;
+      background: #0b1f3a;
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .pipe-kicker {
+      margin: 0 0 18px;
+      color: rgba(255,255,255,0.62);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .pipe-card h2 {
+      margin: 0 0 18px;
+      font-family: "DM Serif Display", serif;
+      font-size: 30px;
+      line-height: 1.1;
+      color: #ffffff;
+      overflow-wrap: anywhere;
+    }
+    .pipe-card p {
+      margin: 0 0 12px;
+      color: rgba(255,255,255,0.82);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .pipe-card strong { color: #ffffff; }
+    .pipe-arrow {
+      display: grid;
+      place-items: center;
+      color: #0b1f3a;
+      font-size: 34px;
+      font-weight: 700;
+    }
+    .methods-section {
+      margin: 58px 0 0;
+    }
+    .section-intro {
+      max-width: 760px;
+      margin-bottom: 22px;
+    }
+    .section-intro h2 {
+      margin: 0 0 12px;
+      font-family: "DM Serif Display", serif;
+      font-size: 42px;
+      line-height: 1.1;
+    }
+    .section-intro p,
+    .methods-copy p,
+    .methods-copy li {
+      color: #252525;
+      font-size: 17px;
+      line-height: 1.85;
+    }
+    .methods-copy {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .data-grid,
+    .reference-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .reference-grid {
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    }
+    .data-card,
+    .reference-card,
+    .formula-card,
+    .performance-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .data-card,
+    .reference-card {
+      min-width: 0;
+      padding: 24px;
+    }
+    .data-card h3,
+    .reference-card h3 {
+      margin: 0 0 16px;
+      font-family: "DM Serif Display", serif;
+      font-size: 26px;
+      line-height: 1.1;
+      overflow-wrap: anywhere;
+    }
+    .meta-row {
+      display: grid;
+      grid-template-columns: minmax(88px, 0.8fr) minmax(0, 1.2fr);
+      justify-content: space-between;
+      gap: 14px;
+      padding: 11px 0;
+      border-top: 1px solid #f0f0f0;
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .meta-row strong {
+      color: #0d0d0d;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+    .performance-card {
+      padding: 28px;
+    }
+    .metrics-table {
+      width: 100%;
+      margin-bottom: 28px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .metrics-table th,
+    .metrics-table td {
+      height: 50px;
+      border-bottom: 1px solid #f0f0f0;
+      text-align: left;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+    .metrics-table th {
+      color: #6b7280;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .performance-chart {
+      position: relative;
+      height: 300px;
+    }
+    .formula-stack {
+      display: grid;
+      gap: 16px;
+    }
+    .formula-card {
+      padding: 22px 24px;
+      border-left: 4px solid #0b1f3a;
+      background: #f2f2ef;
+    }
+    .formula-card h3 {
+      margin: 0 0 10px;
+      font-family: "DM Sans", sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #0b1f3a;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .formula {
+      margin: 0;
+      color: #0d0d0d;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 17px;
+      line-height: 1.8;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    .timeline-wide {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      margin-top: 30px;
+    }
+    .timeline-wide::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 20px;
+      height: 2px;
+      background: #0b1f3a;
+      opacity: 0.22;
+    }
+    .phase {
+      position: relative;
+      padding-top: 52px;
+    }
+    .phase::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      left: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #0b1f3a;
+      box-shadow: 0 0 0 8px #f8f7f4;
+    }
+    .phase-card {
+      min-height: 230px;
+      padding: 26px;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .phase-card h3 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+    .phase-card ul {
+      margin: 18px 0 0;
+      padding-left: 20px;
+      color: #252525;
+      line-height: 1.7;
+    }
+    .citation-tag {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: #0b1f3a;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .reference-card p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.65;
+      overflow-wrap: anywhere;
+    }
+    canvas {
+      max-width: 100%;
+    }
+    @media (max-width: 980px) {
+      .pipeline,
+      .data-grid,
+      .reference-grid,
+      .timeline-wide {
+        grid-template-columns: 1fr;
+      }
+      .pipe-arrow {
+        min-height: 42px;
+        transform: rotate(90deg);
+      }
+      .reference-grid {
+        gap: 14px;
+      }
+      .timeline-wide::before {
+        display: none;
+      }
+    }
+    @media (max-width: 1180px) {
+      .pipeline {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .pipe-arrow {
+        min-height: 34px;
+        transform: rotate(90deg);
+      }
+      .data-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+    }
+    @media (max-width: 620px) {
+      .methods-product {
+        padding: 34px 16px 70px;
+      }
+      .methods-hero h1 {
+        font-size: 44px;
+      }
+      .section-intro h2,
+      .methods-copy h2 {
+        font-size: 34px;
+      }
+      .performance-card {
+        padding: 18px;
+      }
+      .metrics-table th,
+      .metrics-table td {
+        font-size: 12px;
+        padding-right: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-nav">
+      <a class="wordmark" href="index.html">LYMPHOGUARD</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="dashboard.html">Dashboard</a>
+        <a class="active" href="methods.html">Methods</a>
+      </nav>
+      <div class="doctor">
+        <span>Dr. Maya Rao</span>
+        <span class="avatar">MR</span>
+      </div>
+    </header>
+
+    <main class="methods-product">
+      <div class="methods-wrap">
+        <section class="methods-hero">
+          <h1>Supplementary Methods</h1>
+          <p>LYMPHOGUARD is a research prototype for real-time immune fitness monitoring during chemoradiation therapy. It combines pre-treatment risk stratification, wearable physiology, ALC trajectory modeling, and clinician-facing alerting.</p>
+        </section>
+
+        <section class="pipeline" aria-label="Three-stage model pipeline">
+          <article class="pipe-card">
+            <p class="pipe-kicker">Stage 01</p>
+            <h2>Pre-Treatment Risk Stratification</h2>
+            <p><strong>Model:</strong> Component A, Random Forest</p>
+            <p><strong>Inputs:</strong> stage, histology, age, treatment type, simulated GTV, baseline ALC</p>
+            <p><strong>Output:</strong> baseline lymphopenia risk class</p>
+          </article>
+          <div class="pipe-arrow" aria-hidden="true">&rarr;</div>
+          <article class="pipe-card">
+            <p class="pipe-kicker">Stage 02</p>
+            <h2>Wearable Monitoring (Weeks 1-2)</h2>
+            <p><strong>Model:</strong> Component B, Gradient Boosting</p>
+            <p><strong>Inputs:</strong> steps, resting HR, HRV, SpO2, sleep, trend divergence</p>
+            <p><strong>Output:</strong> daily deterioration probability</p>
+          </article>
+          <div class="pipe-arrow" aria-hidden="true">&rarr;</div>
+          <article class="pipe-card">
+            <p class="pipe-kicker">Stage 03</p>
+            <h2>Week 3 ALC Prediction</h2>
+            <p><strong>Model:</strong> Component C, trajectory regressor</p>
+            <p><strong>Inputs:</strong> S(t), ALC(t-1), EDIC, baseline ALC, treatment week</p>
+            <p><strong>Output:</strong> predicted ALC with 90% confidence interval</p>
+          </article>
+        </section>
+
+        <section class="methods-section methods-copy">
+          <h2>Overview</h2>
+          <p>The system is designed to bridge the gap between weekly complete blood count measurements. It continuously reviews wearable signals, patient check-ins, and lab results to identify immune deterioration early enough for clinical review, early labs, dosimetric assessment, or protocol-specific intervention.</p>
+
+          <h2>Clinical Problem</h2>
+          <p>Radiation-induced lymphopenia affects a substantial share of patients receiving thoracic chemoradiation. Published estimates suggest 40-70% of patients develop Grade 3 or higher lymphopenia, defined as ALC below 500 cells/uL. Severe lymphopenia is associated with reduced overall survival, higher infection risk, and impaired response to sequential immunotherapy.</p>
+          <p>Standard surveillance relies on weekly CBC lab draws. A clinically meaningful ALC decline can therefore remain undetected for several days. LYMPHOGUARD addresses this detection gap by using continuous physiological data as an early warning layer.</p>
+
+          <h2>Scientific Rationale</h2>
+          <ol>
+            <li>Thoracic radiation exposes circulating lymphocytes as blood passes through the treatment field. <span class="confidence">High confidence</span></li>
+            <li>Large tumor volume, nodal burden, chemoradiation, age, and dosimetric exposure are plausible predictors of lymphopenia risk. <span class="confidence">High confidence</span></li>
+            <li>Physiological deterioration can alter resting heart rate, HRV, oxygen saturation, activity, and sleep before lab confirmation. <span class="confidence">Moderate confidence</span></li>
+            <li>Wearable data may provide actionable lead time when calibrated against real ALC measurements. <span class="confidence">Requires prospective validation</span></li>
+          </ol>
+        </section>
+
+        <section class="methods-section">
+          <div class="section-intro">
+            <h2>Data Sources</h2>
+            <p>Three datasets establish the prototype structure: public clinical records, ICU physiological windows, and calibrated synthetic ALC curves.</p>
+          </div>
+          <div class="data-grid">
+            <article class="data-card">
+              <h3>NSCLC-Radiomics</h3>
+              <div class="meta-row"><span>Sample size</span><strong>n=422</strong></div>
+              <div class="meta-row"><span>Source</span><strong>Public, TCIA</strong></div>
+              <div class="meta-row"><span>Used for</span><strong>Component A risk stratifier</strong></div>
+            </article>
+            <article class="data-card">
+              <h3>MIMIC-III</h3>
+              <div class="meta-row"><span>Sample size</span><strong>n=100 patients, 117 windows</strong></div>
+              <div class="meta-row"><span>Source</span><strong>PhysioNet</strong></div>
+              <div class="meta-row"><span>Used for</span><strong>Component B deterioration detector</strong></div>
+            </article>
+            <article class="data-card">
+              <h3>Synthetic ALC Trajectories</h3>
+              <div class="meta-row"><span>Sample size</span><strong>n=500</strong></div>
+              <div class="meta-row"><span>Calibration</span><strong>Davuluri 2017 and 2020 RCT</strong></div>
+              <div class="meta-row"><span>Used for</span><strong>Component C trajectory model</strong></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="methods-section">
+          <div class="section-intro">
+            <h2>Model Architecture</h2>
+            <p>The current architecture is intentionally modular, allowing each component to be replaced as paired ALC, dosimetric, and wearable data become available.</p>
+          </div>
+          <div class="methods-copy">
+            <h3>Component A: Pre-treatment Risk Stratifier</h3>
+            <p>A Random Forest model estimates baseline lymphopenia risk from clinical features including stage, histology, treatment type, age, sex, and simulated gross tumor volume. The current public-data prototype uses survival as a surrogate target because paired ALC data are unavailable.</p>
+            <h3>Component B: Physiological Deterioration Detector</h3>
+            <p>A Gradient Boosting model reviews wearable-style features over trailing windows: resting heart rate, HR variability, oxygen saturation, respiratory trends, activity, sleep, and divergence patterns. The prototype was trained on MIMIC-III demo vital-sign windows as a proof of pipeline structure.</p>
+            <h3>Component C: ALC Trajectory Model</h3>
+            <p>A trajectory model forecasts week-by-week ALC with uncertainty bounds and is recalibrated when actual lab results are entered. In a validated deployment, this component would be personalized after early treatment labs and paired wearable observations.</p>
+          </div>
+        </section>
+
+        <section class="methods-section">
+          <div class="section-intro">
+            <h2>Model Performance</h2>
+            <p>Performance is shown honestly against the current prototype data sources and a target clinical benchmark.</p>
+          </div>
+          <article class="performance-card">
+            <table class="metrics-table">
+              <thead>
+                <tr><th>Component</th><th>Metric</th><th>Value</th><th>Current Evidence</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Component A</td><td>AUC</td><td>0.55</td><td>Surrogate data</td></tr>
+                <tr><td>Component B</td><td>AUC</td><td>0.65</td><td>ICU surrogate</td></tr>
+                <tr><td>Component C</td><td>R&sup2;</td><td>0.970</td><td>Synthetic</td></tr>
+              </tbody>
+            </table>
+            <div class="performance-chart"><canvas id="performanceChart"></canvas></div>
+          </article>
+        </section>
+
+        <section class="methods-section">
+          <div class="section-intro">
+            <h2>Mathematical Framework</h2>
+            <p>The following equations summarize the physiological signal layer and the ALC prediction interface.</p>
+          </div>
+          <div class="formula-stack">
+            <article class="formula-card">
+              <h3>HR-SpO2 Divergence Index</h3>
+              <p class="formula">D(t) = &Delta;HR(t) / &Delta;SpO2(t), normalized over a 72h window</p>
+            </article>
+            <article class="formula-card">
+              <h3>Deterioration Score</h3>
+              <p class="formula">S(t) = sigmoid(&beta;0 + &beta;1*steps + &beta;2*HR + &beta;3*HRV + &beta;4*SpO2 + &beta;5*sleep)</p>
+            </article>
+            <article class="formula-card">
+              <h3>ALC Trajectory Prediction</h3>
+              <p class="formula">ALC(t) = f(S(t), ALC(t-1), EDIC, baseline)</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="methods-section methods-copy">
+          <h2>Data Requirements</h2>
+          <p>Clinical validation requires pre-treatment staging, GTV volume, histology, treatment plan, weekly ALC values, dosimetric features such as V5, V10, V20, mean heart dose and mean lung dose, plus daily wearable signals. These data would enable direct modeling of ALC nadir and false alarm rates rather than relying on surrogate labels.</p>
+        </section>
+
+        <section class="methods-section">
+          <div class="section-intro">
+            <h2>Validation Timeline</h2>
+            <p>A staged validation program separates retrospective model benchmarking from prospective wearable signal validation.</p>
+          </div>
+          <div class="timeline-wide">
+            <article class="phase">
+              <div class="phase-card">
+                <h3>Phase 1</h3>
+                <p class="muted">Retrospective, 0-6 months</p>
+                <ul>
+                  <li>Academic thoracic CRT cohort</li>
+                  <li>Serial ALC and dosimetric data</li>
+                  <li>Component A validation</li>
+                  <li>AUC benchmark vs van Rossum nomogram</li>
+                </ul>
+              </div>
+            </article>
+            <article class="phase">
+              <div class="phase-card">
+                <h3>Phase 2</h3>
+                <p class="muted">Prospective, 6-18 months</p>
+                <ul>
+                  <li>30-50 patients</li>
+                  <li>Oura Ring daily physiology</li>
+                  <li>Twice-weekly CBC</li>
+                  <li>Primary endpoint: incremental AUC</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="methods-section methods-copy">
+          <h2>Validation Plan</h2>
+          <h3>Stage 1: Retrospective Validation</h3>
+          <p>A 200-500 patient historical thoracic CRT cohort would be used to train and evaluate the risk stratifier, trajectory model, and alert thresholds. The principal outputs would include AUC for Grade 3+ prediction, calibration of nadir timing, MAE of ALC forecasts, and identification of dosimetric drivers.</p>
+          <h3>Stage 2: Prospective Shadow Validation</h3>
+          <p>A 50-100 patient prospective study would run LYMPHOGUARD in shadow mode while standard weekly labs continue. Alerts would be recorded but not shown to clinicians. The analysis would determine whether wearable deterioration signals precede lab-confirmed Grade 3+ lymphopenia and by how many days.</p>
+
+          <h2>Limitations</h2>
+          <p>The current prototype has not been validated on paired wearable and ALC measurements. Model B uses ICU-derived data rather than ambulatory oncology wearables, Model C uses synthetic trajectory structure, and the public datasets do not include the strongest known dosimetric predictors. Alert thresholds are heuristic and false positive rates are unknown.</p>
+          <p class="note">LYMPHOGUARD is a research prototype only. It is not cleared or approved for clinical decision-making and should be interpreted as a clinical aid requiring independent physician judgment.</p>
+        </section>
+
+        <section class="methods-section">
+          <div class="section-intro">
+            <h2>Key References</h2>
+            <p>Representative literature anchors for mediation, early ALC prediction, radiation modality, wearable activity, and EDIC.</p>
+          </div>
+          <div class="reference-grid">
+            <article class="reference-card">
+              <span class="citation-tag">Chen 2024</span>
+              <h3>Mediation</h3>
+              <p>Quantified immune-cell mediation pathways linking treatment exposure with downstream clinical outcomes.</p>
+            </article>
+            <article class="reference-card">
+              <span class="citation-tag">Damen 2025</span>
+              <h3>Week 3 ALC</h3>
+              <p>Showed that early-treatment lymphocyte measurements improve prediction of later severe lymphopenia.</p>
+            </article>
+            <article class="reference-card">
+              <span class="citation-tag">2020 RCT</span>
+              <h3>Proton vs IMRT</h3>
+              <p>Compared radiation modality effects in thoracic chemoradiation and informed immune-sparing hypotheses.</p>
+            </article>
+            <article class="reference-card">
+              <span class="citation-tag">Ohri 2019</span>
+              <h3>Step Count</h3>
+              <p>Connected activity decline during treatment with clinically meaningful deterioration risk.</p>
+            </article>
+            <article class="reference-card">
+              <span class="citation-tag">Friedes 2024</span>
+              <h3>EDIC</h3>
+              <p>Supported EDIC as a radiation exposure construct relevant to immune depletion modeling.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script>
+    const targetLinePlugin = {
+      id: "targetLine",
+      afterDraw(chart) {
+        const xScale = chart.scales.x;
+        const yArea = chart.chartArea;
+        const x = xScale.getPixelForValue(0.8);
+        const ctx = chart.ctx;
+        ctx.save();
+        ctx.beginPath();
+        ctx.setLineDash([6, 6]);
+        ctx.moveTo(x, yArea.top);
+        ctx.lineTo(x, yArea.bottom);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#c2413b";
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#c2413b";
+        ctx.font = "700 12px DM Sans";
+        ctx.textAlign = "center";
+        ctx.fillText("Target Performance", x, yArea.top - 10);
+        ctx.restore();
+      }
+    };
+
+    new Chart(document.getElementById("performanceChart"), {
+      type: "bar",
+      plugins: [targetLinePlugin],
+      data: {
+        labels: ["Component A", "Component B", "Component C"],
+        datasets: [{
+          label: "Current value",
+          data: [0.55, 0.65, 0.97],
+          backgroundColor: "#0b1f3a",
+          borderRadius: 8,
+          barThickness: 34
+        }]
+      },
+      options: {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            enabled: true,
+            backgroundColor: "#0d0d0d",
+            titleFont: { family: "DM Sans", weight: "700" },
+            bodyFont: { family: "DM Sans" },
+            callbacks: {
+              label(context) {
+                const label = context.label === "Component C" ? "R2" : "AUC";
+                return `${label}: ${context.raw.toFixed(3)}`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            min: 0,
+            max: 1,
+            grid: { color: "rgba(0,0,0,0.06)" },
+            ticks: { color: "#6b7280", font: { family: "DM Sans" } }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: "#0d0d0d", font: { family: "DM Sans", weight: "700" } }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

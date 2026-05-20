@@ -26,7 +26,7 @@ Recommended Vercel settings:
 
 - Framework preset: `Other`
 - Build command: leave empty
-- Output directory: leave empty
+- Output directory: `public`
 - Install command: leave empty
 
 The included `vercel.json` maps clean routes such as `/dashboard`, `/patient`, `/patient-portal`, and `/methods` to their HTML files.

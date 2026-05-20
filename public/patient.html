@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LYMPHOGUARD | Patient</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body data-page="patient">
+  <div class="app-shell">
+    <main class="page">
+      <a class="back-link" href="dashboard.html" aria-label="Back to dashboard">&larr; Back to dashboard</a>
+      <section class="detail-top">
+        <div>
+          <h1 data-patient-name>James Williams</h1>
+          <p class="muted small" data-patient-meta>NSCLC, stage III | Treating physician: Dr. Maya Rao</p>
+        </div>
+        <div class="button-row">
+          <button class="button secondary" type="button" data-action="order-lab">Order CBC</button>
+          <button class="button primary" type="button" data-action="review">Review Escalation</button>
+        </div>
+      </section>
+
+      <section class="detail-layout">
+        <div>
+          <article class="card chart-card">
+            <div class="section-head">
+              <h2>ALC Trajectory</h2>
+              <p class="muted small">Measured ALC, predicted course, 90% CI, and Grade 3 threshold.</p>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="alcChart"></canvas>
+            </div>
+          </article>
+
+          <section class="mini-grid" aria-label="Wearable mini charts">
+            <article class="card mini-card">
+              <h3>Daily Steps</h3>
+              <div class="mini-chart"><canvas id="stepsChart"></canvas></div>
+            </article>
+            <article class="card mini-card">
+              <h3>Resting HR</h3>
+              <div class="mini-chart"><canvas id="hrChart"></canvas></div>
+            </article>
+            <article class="card mini-card">
+              <h3>HRV</h3>
+              <div class="mini-chart"><canvas id="hrvChart"></canvas></div>
+            </article>
+          </section>
+
+          <article class="card recommend-card">
+            <h2>Clinical Recommendations</h2>
+            <ol>
+              <li>Order an early CBC with differential and compare against the predicted nadir curve.</li>
+              <li>Review dosimetric plan constraints for circulating blood pool exposure.</li>
+              <li>Assess fever, dyspnea, cough, and infection symptoms during daily check-in.</li>
+              <li>Coordinate multidisciplinary review if ALC remains below 500 cells/uL.</li>
+            </ol>
+          </article>
+        </div>
+
+        <aside class="side-stack">
+          <article class="card gauge-card">
+            <h2>Immune Fitness Score</h2>
+            <div class="gauge-wrap"><canvas id="fitnessGauge"></canvas></div>
+            <p class="muted small">Current score: <strong data-score>65</strong>/100</p>
+          </article>
+
+          <article class="card chart-card">
+            <h2>EDIC Score</h2>
+            <div class="edic-grid">
+              <div class="edic-box"><strong>4.8 Gy</strong><span class="muted small">Proton</span></div>
+              <div class="edic-box"><strong>7.2 Gy</strong><span class="muted small">IMRT</span></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="chart-card"><h2>Clinical Status</h2></div>
+            <div class="pairs">
+              <div class="pair"><span>Current ALC</span><span>420 cells/uL</span></div>
+              <div class="pair"><span>CTCAE grade</span><span>Grade 3</span></div>
+              <div class="pair"><span>Treatment week</span><span>4.1 of 6</span></div>
+              <div class="pair"><span>Last wearable sync</span><span>6 min ago</span></div>
+            </div>
+          </article>
+
+          <article class="card chart-card">
+            <h2>Alert History</h2>
+            <div class="pill-list" style="margin-top: 16px;">
+              <span class="pill">Grade 3 threshold</span>
+              <span class="pill">HRV decline</span>
+              <span class="pill">CBC requested</span>
+              <span class="pill">Fever watch</span>
+            </div>
+          </article>
+        </aside>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

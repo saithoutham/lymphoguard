@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LYMPHOGUARD | Patient Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    html,
+    body,
+    body[data-page="portal"] {
+      height: 100%;
+      min-height: 100%;
+      overflow: hidden;
+      font-family: "DM Sans", sans-serif;
+      background: #f8f7f4;
+    }
+    .oura-shell {
+      min-height: 100vh;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #f8f7f4;
+    }
+    .oura-content {
+      flex: 1;
+      width: min(100%, 520px);
+      margin: 0 auto;
+      padding: 22px 18px 104px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .portal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .home-link {
+      color: #0b1f3a;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .sync-pill {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0 12px;
+      color: #6b7280;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .oura-title {
+      margin: 0 0 8px;
+      color: #0b1f3a;
+      font-family: "DM Sans", sans-serif;
+      font-size: 34px;
+      line-height: 1.12;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+    .oura-subtitle {
+      margin: 0 0 20px;
+      color: #6b7280;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .oura-card,
+    .card.oura-card {
+      margin-top: 16px;
+      padding: 24px;
+      border: 0;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .oura-card h2 {
+      margin: 0 0 14px;
+      color: #0b1f3a;
+      font-family: "DM Sans", sans-serif;
+      font-size: 19px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+    .score-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+    .portal-chart {
+      position: relative;
+      width: min(260px, 100%);
+      height: 260px;
+      margin: 0 auto;
+    }
+    .score-copy p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .signals-strip {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 2px 2px 4px;
+      scrollbar-width: none;
+    }
+    .signals-strip::-webkit-scrollbar { display: none; }
+    .signal-pill {
+      min-width: 142px;
+      padding: 14px;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .signal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: #6b7280;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .signal-icon {
+      font-size: 16px;
+      line-height: 1;
+    }
+    .signal-value {
+      color: #0b1f3a;
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 700;
+    }
+    .trend-up { color: #16a34a; }
+    .trend-down { color: #d97706; }
+    .progress-track {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+    .week-segment {
+      height: 52px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #f1f1ee;
+      color: #6b7280;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .week-segment.done {
+      color: #ffffff;
+      background: rgba(11,31,58,0.7);
+    }
+    .week-segment.current {
+      color: #ffffff;
+      background: #0b1f3a;
+    }
+    .meaning-card {
+      border-left: 4px solid #d97706;
+      background: rgba(217,119,6,0.08);
+    }
+    .meaning-card.good {
+      border-left-color: #16a34a;
+      background: rgba(22,163,74,0.08);
+    }
+    .meaning-card p,
+    .weekly-insight p {
+      margin: 0;
+      color: #3f3f46;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .weekly-insight {
+      border-left: 4px solid #d97706;
+    }
+    .portal-line {
+      position: relative;
+      height: 214px;
+    }
+    .check-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .energy-btn,
+    .toggle-btn {
+      height: 48px;
+      border: 0;
+      border-radius: 14px;
+      color: #0d0d0d;
+      background: #f1f1ee;
+      font-family: "DM Sans", sans-serif;
+      font-weight: 700;
+    }
+    .energy-btn.active,
+    .toggle-btn.active {
+      color: #ffffff;
+      background: #0b1f3a;
+    }
+    .toggle-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .sticky-contact {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
+      padding: 14px 18px calc(14px + env(safe-area-inset-bottom));
+      background: rgba(248,247,244,0.94);
+      backdrop-filter: blur(10px);
+    }
+    .contact-button {
+      width: min(100%, 520px);
+      height: 58px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 16px;
+      color: #ffffff;
+      background: #0b1f3a;
+      font-family: "DM Sans", sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .muted-note {
+      color: #6b7280;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    @media (max-width: 420px) {
+      .score-layout {
+        grid-template-columns: 1fr;
+      }
+      .portal-chart {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body data-page="portal">
+  <main class="oura-shell">
+    <section class="oura-content" aria-label="Patient portal">
+      <header class="portal-head">
+        <a class="home-link" href="index.html">&larr; Home</a>
+        <span class="sync-pill">Synced 6 min ago</span>
+      </header>
+
+      <h1 class="oura-title">Good evening, James.</h1>
+      <p class="oura-subtitle">Your care team is monitoring today's immune fitness signals.</p>
+
+      <section class="signals-strip" aria-label="Today's signals">
+        <article class="signal-pill">
+          <div class="signal-top"><span class="signal-icon">S</span><span class="trend-down">&darr; 23%</span></div>
+          <div class="signal-value">4,200</div>
+          <div class="muted-note">Steps</div>
+        </article>
+        <article class="signal-pill">
+          <div class="signal-top"><span class="signal-icon">H</span><span class="trend-up">&uarr; 4</span></div>
+          <div class="signal-value">78 bpm</div>
+          <div class="muted-note">Resting HR</div>
+        </article>
+        <article class="signal-pill">
+          <div class="signal-top"><span class="signal-icon">V</span><span class="trend-down">&darr; 6</span></div>
+          <div class="signal-value">28ms</div>
+          <div class="muted-note">HRV</div>
+        </article>
+        <article class="signal-pill">
+          <div class="signal-top"><span class="signal-icon">O</span><span class="trend-up">&uarr; 1</span></div>
+          <div class="signal-value">97%</div>
+          <div class="muted-note">SpO2</div>
+        </article>
+      </section>
+
+      <article class="oura-card">
+        <h2>Immune Fitness</h2>
+        <div class="score-layout">
+          <div class="portal-chart"><canvas id="portalGauge"></canvas></div>
+          <div class="score-copy">
+            <p>Your score reflects recent immune cell count, wearable signals, and symptom check-ins. A lower score means your care team may want to review your labs sooner.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="oura-card meaning-card">
+        <h2>What This Means</h2>
+        <p>Your care team has been notified. Continue daily check-ins and contact the clinic if you develop fever, chills, worsening shortness of breath, or new infection symptoms.</p>
+      </article>
+
+      <article class="oura-card">
+        <h2>Treatment Progress</h2>
+        <p class="muted-note">Week 3 of 6</p>
+        <div class="progress-track" aria-label="Treatment progress">
+          <span class="week-segment done">W1</span>
+          <span class="week-segment done">W2</span>
+          <span class="week-segment current">W3</span>
+          <span class="week-segment">W4</span>
+          <span class="week-segment">W5</span>
+          <span class="week-segment">W6</span>
+        </div>
+      </article>
+
+      <article class="oura-card weekly-insight">
+        <h2>Weekly Insight</h2>
+        <p>Your step count has decreased 23% this week. Your care team is aware.</p>
+      </article>
+
+      <article class="oura-card">
+        <h2>Your Immune Cell Count</h2>
+        <div class="portal-line"><canvas id="portalAlc"></canvas></div>
+      </article>
+
+      <article class="oura-card">
+        <h2>Daily Check-In</h2>
+        <p class="muted-note">Energy level</p>
+        <div class="check-row">
+          <button class="energy-btn" type="button">1</button>
+          <button class="energy-btn" type="button">2</button>
+          <button class="energy-btn active" type="button">3</button>
+          <button class="energy-btn" type="button">4</button>
+          <button class="energy-btn" type="button">5</button>
+        </div>
+        <p class="muted-note" style="margin-top: 20px;">Fever today?</p>
+        <div class="toggle-row">
+          <button class="toggle-btn" type="button" data-fever="yes">Yes</button>
+          <button class="toggle-btn active" type="button" data-fever="no">No</button>
+        </div>
+        <p class="muted-note" data-check-status style="margin-bottom: 0;">Energy level 3 selected. No fever recorded.</p>
+      </article>
+    </section>
+
+    <footer class="sticky-contact">
+      <button class="contact-button" type="button" data-contact>Submit</button>
+    </footer>
+  </main>
+  <script>
+    const navy = "#0b1f3a";
+    const gray = "#6b7280";
+    const amber = "#d97706";
+    const score = 48;
+
+    const centerTextPlugin = {
+      id: "portalCenterText",
+      afterDraw(chart) {
+        const { ctx, chartArea } = chart;
+        const x = (chartArea.left + chartArea.right) / 2;
+        const y = (chartArea.top + chartArea.bottom) / 2;
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = navy;
+        ctx.font = "700 42px DM Sans";
+        ctx.fillText(String(score), x, y - 4);
+        ctx.fillStyle = gray;
+        ctx.font = "700 12px DM Sans";
+        ctx.fillText("score", x, y + 28);
+        ctx.restore();
+      }
+    };
+
+    new Chart(document.getElementById("portalGauge"), {
+      type: "doughnut",
+      plugins: [centerTextPlugin],
+      data: {
+        labels: ["Immune fitness", "Remaining"],
+        datasets: [{
+          data: [score, 100 - score],
+          backgroundColor: [amber, "#ecebe6"],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "78%",
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            enabled: true,
+            backgroundColor: "#0d0d0d",
+            titleFont: { family: "DM Sans", weight: "700" },
+            bodyFont: { family: "DM Sans" }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("portalAlc"), {
+      type: "line",
+      data: {
+        labels: ["Week 0", "Week 1", "Week 2", "Week 3", "Week 4", "Week 5"],
+        datasets: [{
+          label: "Immune cell count",
+          data: [1880, 1440, 1020, 710, 420, 360],
+          borderColor: navy,
+          backgroundColor: "transparent",
+          borderWidth: 3,
+          pointRadius: 4,
+          pointHoverRadius: 7,
+          tension: 0.35
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "nearest", intersect: false },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            enabled: true,
+            backgroundColor: "#0d0d0d",
+            titleFont: { family: "DM Sans", weight: "700" },
+            bodyFont: { family: "DM Sans" },
+            callbacks: {
+              label(context) {
+                return `ALC: ${context.formattedValue} cells/uL`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: "rgba(0,0,0,0.04)" },
+            ticks: { color: gray, font: { family: "DM Sans" } }
+          },
+          y: {
+            grid: { color: "rgba(0,0,0,0.06)" },
+            ticks: { color: gray, font: { family: "DM Sans" } }
+          }
+        }
+      }
+    });
+
+    document.querySelectorAll(".energy-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".energy-btn").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        document.querySelector("[data-check-status]").textContent = `Energy level ${button.textContent} selected.`;
+      });
+    });
+
+    document.querySelectorAll("[data-fever]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll("[data-fever]").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        document.querySelector("[data-check-status]").textContent = button.dataset.fever === "yes"
+          ? "Fever response recorded. Care team review flagged."
+          : "No fever recorded.";
+      });
+    });
+
+    document.querySelector("[data-contact]").addEventListener("click", () => {
+      alert("Daily check-in submitted.");
+    });
+  </script>
+</body>
+</html>

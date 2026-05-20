@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LYMPHOGUARD | Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="dashboard">
+  <div class="app-shell">
+    <header class="top-nav">
+      <a class="wordmark" href="index.html">LYMPHOGUARD</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a class="active" href="dashboard.html">Dashboard</a>
+        <a href="methods.html">Methods</a>
+      </nav>
+      <div class="doctor">
+        <span>Dr. Maya Rao</span>
+        <span class="avatar">MR</span>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="stat-grid" aria-label="Clinical summary">
+        <article class="card stat-card">
+          <p class="stat-value">142</p>
+          <p class="stat-label">Patients Monitored</p>
+        </article>
+        <article class="card stat-card">
+          <p class="stat-value">18</p>
+          <p class="stat-label">Active Alerts</p>
+        </article>
+        <article class="card stat-card">
+          <p class="stat-value">12</p>
+          <p class="stat-label">Grade 3+ Risk</p>
+        </article>
+        <article class="card stat-card">
+          <p class="stat-value">91%</p>
+          <p class="stat-label">Wearable Sync</p>
+        </article>
+      </section>
+
+      <section class="dashboard-grid">
+        <div>
+          <div class="section-head">
+            <div>
+              <h2>Patient Registry</h2>
+              <p class="muted small">Thoracic chemoradiation cohort under continuous surveillance.</p>
+            </div>
+            <button class="tiny-button" type="button" data-action="acknowledge">Acknowledge Queue</button>
+          </div>
+          <article class="card table-card">
+            <table aria-label="Patient table">
+              <thead>
+                <tr>
+                  <th>Patient ID</th>
+                  <th>Diagnosis</th>
+                  <th>TX Week</th>
+                  <th>Current ALC</th>
+                  <th>Predicted Nadir</th>
+                  <th>Risk Level</th>
+                  <th>Wearable</th>
+                  <th>Alert</th>
+                </tr>
+              </thead>
+              <tbody data-patient-table></tbody>
+            </table>
+          </article>
+        </div>
+
+        <aside class="card alerts-card" aria-label="Active alerts">
+          <h2>Active Alerts</h2>
+          <p class="muted small">Prioritized timeline from wearable and lab signals.</p>
+          <div class="timeline">
+            <article class="timeline-item high">
+              <p class="timeline-title">James Williams</p>
+              <p class="timeline-copy">Projected ALC nadir below Grade 4 range within 72 hours.</p>
+              <button class="tiny-button" type="button" data-action="acknowledge">Acknowledge</button>
+            </article>
+            <article class="timeline-item medium">
+              <p class="timeline-title">Robert Torres</p>
+              <p class="timeline-copy">Resting HR rising while HRV declines across 3 daily windows.</p>
+              <button class="tiny-button" type="button" data-action="acknowledge">Acknowledge</button>
+            </article>
+            <article class="timeline-item low">
+              <p class="timeline-title">Elena Park</p>
+              <p class="timeline-copy">Follow-up CBC due before the next treatment fraction.</p>
+              <button class="tiny-button" type="button" data-action="acknowledge">Acknowledge</button>
+            </article>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
