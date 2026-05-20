@@ -1,0 +1,9 @@
+backend/
+frontend/
+datasets/
+docs/
+*.db
+*.joblib
+__pycache__/
+.DS_Store
+LYMPHOGUARD_Comprehensive_Report.md
