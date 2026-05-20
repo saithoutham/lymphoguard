@@ -7,10 +7,3 @@ docs/
 __pycache__/
 .DS_Store
 LYMPHOGUARD_Comprehensive_Report.md
-index.html
-dashboard.html
-patient.html
-patient-portal.html
-methods.html
-styles.css
-app.js
