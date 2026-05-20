@@ -25,7 +25,7 @@ This is a static site. Vercel can deploy it directly from the repository root.
 Recommended Vercel settings:
 
 - Framework preset: `Other`
-- Build command: leave empty, or use `npm run build`
+- Build command: leave empty
 - Output directory: leave empty
 - Install command: leave empty
 

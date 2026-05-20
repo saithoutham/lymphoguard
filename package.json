@@ -1,9 +1,0 @@
-{
-  "name": "lymphoguard-static",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "build": "echo 'Static site: no build step required'",
-    "start": "python3 -m http.server 8080"
-  }
-}
