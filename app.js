@@ -102,11 +102,11 @@ const centerTextPlugin = {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = navy;
-    ctx.font = "700 56px DM Sans";
+    ctx.font = "700 44px DM Sans";
     ctx.fillText(options.text, x, y - 6);
     ctx.fillStyle = muted;
-    ctx.font = "500 13px DM Sans";
-    ctx.fillText("immune fitness", x, y + 36);
+    ctx.font = "600 12px DM Sans";
+    ctx.fillText("immune fitness", x, y + 30);
     ctx.restore();
   }
 };
@@ -249,6 +249,7 @@ function initPatientDetail() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      layout: { padding: { top: 12, right: 16, bottom: 8, left: 24 } },
       interaction: { mode: "nearest", intersect: false, axis: "x" },
       plugins: {
         tooltip: {
@@ -263,7 +264,8 @@ function initPatientDetail() {
           }
         },
         legend: {
-          labels: { color: muted, font: { family: "DM Sans" }, usePointStyle: true }
+          position: "bottom",
+          labels: { color: muted, font: { family: "DM Sans", size: 11 }, usePointStyle: true, boxWidth: 8, padding: 14 }
         }
       },
       scales: baseScaleOptions()
@@ -295,6 +297,7 @@ function makeMiniChart(id, label, values, color) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      layout: { padding: 6 },
       interaction: { mode: "nearest", intersect: false },
       plugins: {
         tooltip: tooltipOptions,
@@ -325,6 +328,7 @@ function makeGauge(id, score) {
       responsive: true,
       maintainAspectRatio: false,
       cutout: "78%",
+      layout: { padding: 18 },
       plugins: {
         tooltip: {
           ...tooltipOptions,

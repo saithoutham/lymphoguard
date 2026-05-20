@@ -13,6 +13,7 @@
     html,
     body,
     body[data-page="portal"] {
+      width: 100vw;
       height: 100%;
       min-height: 100%;
       overflow: hidden;
@@ -25,19 +26,24 @@
       display: flex;
       flex-direction: column;
       background: #f8f7f4;
+      overflow-x: hidden;
     }
     .oura-content {
       flex: 1;
-      width: min(100%, 520px);
-      margin: 0 auto;
+      width: min(394px, calc(100vw - 36px));
+      max-width: 394px;
+      margin: 0;
       padding: 22px 18px 104px;
+      box-sizing: border-box;
       overflow-y: auto;
+      overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
     }
     .portal-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       margin-bottom: 18px;
     }
     .home-link {
@@ -47,6 +53,7 @@
       font-weight: 700;
     }
     .sync-pill {
+      max-width: 160px;
       min-height: 34px;
       display: inline-flex;
       align-items: center;
@@ -57,12 +64,15 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
       font-size: 12px;
       font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .oura-title {
       margin: 0 0 8px;
       color: #0b1f3a;
       font-family: "DM Sans", sans-serif;
-      font-size: 34px;
+      font-size: clamp(28px, 7vw, 34px);
       line-height: 1.12;
       font-weight: 700;
       letter-spacing: 0;
@@ -72,15 +82,19 @@
       color: #6b7280;
       font-size: 15px;
       line-height: 1.55;
+      overflow-wrap: anywhere;
     }
     .oura-card,
     .card.oura-card {
+      width: 100%;
+      max-width: 100%;
       margin-top: 16px;
       padding: 24px;
       border: 0;
       border-radius: 16px;
       background: #ffffff;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      overflow: hidden;
     }
     .oura-card h2 {
       margin: 0 0 14px;
@@ -98,21 +112,31 @@
     }
     .portal-chart {
       position: relative;
-      width: min(260px, 100%);
-      height: 260px;
+      width: min(240px, 100%);
+      height: 240px;
+      min-height: 240px;
       margin: 0 auto;
+      overflow: hidden;
+    }
+    .portal-chart canvas,
+    .portal-line canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
     }
     .score-copy p {
       margin: 0;
       color: #6b7280;
       font-size: 14px;
       line-height: 1.65;
+      overflow-wrap: anywhere;
     }
     .signals-strip {
       display: flex;
       gap: 10px;
       overflow-x: auto;
       padding: 2px 2px 4px;
+      max-width: 100%;
       scrollbar-width: none;
     }
     .signals-strip::-webkit-scrollbar { display: none; }
@@ -181,13 +205,17 @@
       color: #3f3f46;
       font-size: 15px;
       line-height: 1.7;
+      overflow-wrap: anywhere;
     }
     .weekly-insight {
       border-left: 4px solid #d97706;
     }
     .portal-line {
       position: relative;
-      height: 214px;
+      width: 100%;
+      height: 240px;
+      min-height: 240px;
+      overflow: hidden;
     }
     .check-row {
       display: grid;
@@ -219,15 +247,16 @@
     .sticky-contact {
       position: fixed;
       left: 0;
-      right: 0;
+      right: auto;
       bottom: 0;
       z-index: 20;
+      width: min(394px, 100vw);
       padding: 14px 18px calc(14px + env(safe-area-inset-bottom));
       background: rgba(248,247,244,0.94);
       backdrop-filter: blur(10px);
     }
     .contact-button {
-      width: min(100%, 520px);
+      width: 100%;
       height: 58px;
       margin: 0 auto;
       display: flex;
@@ -252,7 +281,9 @@
         grid-template-columns: 1fr;
       }
       .portal-chart {
+        width: min(220px, 100%);
         height: 220px;
+        min-height: 220px;
       }
     }
   </style>
@@ -368,7 +399,7 @@
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillStyle = navy;
-        ctx.font = "700 42px DM Sans";
+        ctx.font = "700 38px DM Sans";
         ctx.fillText(String(score), x, y - 4);
         ctx.fillStyle = gray;
         ctx.font = "700 12px DM Sans";
@@ -392,6 +423,7 @@
         responsive: true,
         maintainAspectRatio: false,
         cutout: "78%",
+        layout: { padding: 16 },
         plugins: {
           legend: { display: false },
           tooltip: {
@@ -422,6 +454,7 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        layout: { padding: { top: 8, right: 10, bottom: 0, left: 0 } },
         interaction: { mode: "nearest", intersect: false },
         plugins: {
           legend: { display: false },

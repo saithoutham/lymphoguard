@@ -443,11 +443,23 @@ tbody tr:last-child td {
 
 .chart-card {
   padding: 24px;
+  overflow: hidden;
 }
 
 .chart-wrap {
   position: relative;
-  height: 380px;
+  width: 100%;
+  height: 420px;
+  min-height: 420px;
+  overflow: hidden;
+}
+
+.chart-wrap canvas,
+.mini-chart canvas,
+.gauge-wrap canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .mini-grid {
@@ -459,11 +471,15 @@ tbody tr:last-child td {
 
 .mini-card {
   padding: 18px;
+  overflow: hidden;
 }
 
 .mini-chart {
   position: relative;
-  height: 122px;
+  width: 100%;
+  height: 132px;
+  min-height: 132px;
+  overflow: hidden;
 }
 
 .recommend-card {
@@ -492,11 +508,16 @@ tbody tr:last-child td {
 .gauge-card {
   padding: 24px;
   text-align: center;
+  overflow: hidden;
 }
 
 .gauge-wrap {
   position: relative;
-  height: 270px;
+  width: min(280px, 100%);
+  height: 280px;
+  min-height: 280px;
+  margin: 10px auto 14px;
+  overflow: hidden;
 }
 
 .edic-grid {
